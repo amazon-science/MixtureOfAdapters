@@ -1,0 +1,89 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+task_type: products
+
+datamodule:
+  _target_: embedding_adapter.products_datamodule.TripletDataModule
+  raw_data_path: raw_data/${task_type}/
+  local_data_path: data/${task_type}/
+  batch_size: 512
+  num_workers: 8
+  repeat: 1
+  val_split: 0.1
+  ood_task_split: 0.1
+
+module:
+  _target_: embedding_adapter.products_module.TripletModule
+  adapter:
+    _target_: embedding_adapter.adapters.HyperCLAdapter  
+    input_size: 4096
+    hidden_size: 32
+    output_size: 512
+  learning_rate: 0.007
+  weight_decay: 0.01
+  triplet_loss_coefficient: 1
+  loss_temperature: 0.3
+  in_batch_loss_coefficient: 0
+  in_batch_loss_temperature: 0.1
+  initial_tau: 0.3
+  min_tau: 0.3
+  tau_anneal_rate: 0.1
+  similarity: "cosine"
+
+dump_stderr: false
+dump_stdout: false
+logdir: null
+
+trainer:
+  _target_: lightning.pytorch.Trainer
+  accumulate_grad_batches: 1
+  max_epochs: 1000
+  check_val_every_n_epoch: 5
+  accelerator: gpu
+  devices: 1
+  gradient_clip_val: 1.0
+  callbacks:
+    - _target_: lightning.pytorch.callbacks.ModelCheckpoint
+      monitor: "triplet_loss/id_val"
+      dirpath: ${logdir}/checkpoints
+      filename: "triplet-model-best-id-val"
+      save_top_k: 1
+      save_last: false
+      mode: min
+
+    - _target_: lightning.pytorch.callbacks.ModelCheckpoint
+      monitor: "triplet_loss/ood_val"
+      dirpath: ${logdir}/checkpoints
+      filename: "triplet-model-best-ood-val"
+      save_top_k: 1
+      save_last: false
+      mode: min
+
+    - _target_: lightning.pytorch.callbacks.ModelCheckpoint
+      dirpath: ${logdir}/checkpoints
+      filename: "triplet-model-epoch-{epoch:04d}"
+      every_n_epochs: 20
+      save_top_k: -1
+      save_last: true
+      auto_insert_metric_name: false
+
+    - _target_: lightning.pytorch.callbacks.EarlyStopping
+      monitor: "triplet_loss/id_val"
+      patience: 10
+      mode: min
+
+    - _target_: embedding_adapter.callbacks.MetricsPlotCallback
+      save_dir: ${logdir}
+  
+    - _target_: lightning.pytorch.callbacks.RichProgressBar
+
+  logger:
+    _target_: lightning.pytorch.loggers.TensorBoardLogger
+    save_dir: ${logdir}
+    name: "tensorboard"
+  enable_progress_bar: 
+    _target_: builtins.eval
+    _args_:
+      - not ${dump_stdout}
+  log_every_n_steps: 1

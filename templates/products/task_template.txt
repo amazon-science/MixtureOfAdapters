@@ -1,0 +1,34 @@
+<instructions>
+Your goal is to generate multiple document attribute extraction tasks. These tasks will help identify similar products based on a specific attribute that will be provided to you.
+
+Each task should involve extracting an attribute that can be used to find other similar products based on the given criterion. Ensure that each task is practical, grounded in real-world use cases, and reflects considerations that are common and intuitive for a typical customer.
+
+<step1>
+Read, understand, and explain the criteria provided inside the <criteria></criteria> tags. You will include this criteria within <criteria> tags in your response.
+</step1>
+
+<step2>
+Create a list of 10 varied and creative prompts for extracting a single product feature based on the selected criterion. Use a mix of:
+- Commands (e.g., "Identify the...")
+- Questions (e.g., "What is the...")
+- Passive voice (e.g., "The feature to be extracted is...")
+Each task should:
+- Focus on a **single product feature**,
+- Mention a **specific product category** (e.g., backpack, frying pan, water bottle),
+- Use **different phrasing** and **sentence structure** for each task.
+Wrap each task in <task> tags. In your response, provide the list of tasks in the following format:
+
+<response>
+  <criteria>Criteria</criteria>
+  <task>First attribute extraction task instruction for Criteria</task>
+  <task>Second attribute extraction task instruction for Criteria</task>
+  <task>Third attribute extraction task instruction for Criteria</task>
+  <task>Fourth attribute extraction task instruction for Criteria</task>
+  ...
+</response>
+</step2>
+</instructions>
+
+<criteria>
+{{criteria}}
+</criteria>

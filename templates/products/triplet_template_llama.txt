@@ -1,0 +1,39 @@
+### Instruction
+You will be given a text attribute extraction description, which will be used as the criterion for similarity measurement between product descriptions. Your goal is to generate a triplet example for this task, containing the following keys:
+
+### Keys
+anchorDocument: Description of an anchor product , represented as a string of at least 50 words in English.  
+negativeDocument: A modified version of the description for the anchor product. It should only differ based on the attribute specified in the task, represented as a string of at least 50 words in English.  
+positiveDocument: Description of a product relevant to the anchor product based on the attribute given in the task, represented as a string of at least 50 words in English.  
+
+### Steps
+1. Read and carefully understand the text retrieval task description provided.  
+2. Identify the specific similarity criteria or feature mentioned in the task that should be used to create the negativeDocument and positiveDocument.  
+3. Describe the task and the similarity criteria given in the task.
+4. Consider multiple options regarding your example. 
+4. Generate the following example documents, adhering to the guidelines:  
+    - anchorDocument: A product description of at least 50 words in English, a product description relevant to the task.  
+    - negativeDocument: A modified version of the anchorDocument, differing only based on the attribute specified as similarity criteria. The modification should ensure the document remains internally consistent. It should be identical to the anchorDocument in all other aspects.  
+    - positiveDocument: A different product description of at least 50 words in English, related to the anchorDocument based on the specified similarity criteria.  
+
+### Guidelines
+- Describe the task and the similarity criteria given in the task. Include this in your response.
+- Consider different options regarding your example. List these options in your response.
+- Be creative in generating the content of the documents, considering different options.  
+- Ensure accurate identification and application of the similarity criteria given in the task.  
+- Maintain the length requirement of at least 50 words for all documents.  
+- Enclose your example within `<example></example>` tags.  
+
+### Task Description
+{{task}}
+
+### Response Format
+"Describe the task and the similarity criteria given in the task here."
+"Consider different options regarding your example. List at least 10 different options here and then choose the last one of these options."
+<example>
+{
+"anchorDocument": "insert anchor document here",
+"negativeDocument": "insert negative document here",
+"positiveDocument": "insert positive document here"
+}
+</example>

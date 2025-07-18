@@ -1,0 +1,32 @@
+### Instruction
+You will be given a text attribute extraction task, which will be used as the criterion for similarity measurement between product descriptions. Your goal is to generate a response containing the following keys:
+
+### Keys
+negativeTask: A misleadingly similar-looking task that instead instructs the extraction of a different attribute.
+positiveTask: A reworded version of the original task that still requires extracting the same attribute. It can be framed as a question or an instruction.
+
+### Steps
+1. Carefully analyze the provided task description to identify the specific attribute to be extracted.
+2. Generate a negativeTask that closely resembles the original task but shifts the focus to extracting a different attribute.
+3. Generate a positiveTask that rephrases the original task while keeping the attribute extraction requirement unchanged.
+
+### Guidelines
+- Describe the task and the similarity criteria given in the task before generating your response.  
+- Generate realistic and natural task descriptions.
+- Ensure linguistic diversity in the positive task while maintaining the core extraction requirement.
+- Make the negative task appear deceptively similar while modifying the extraction focus.
+- Enclose your response within `<response></response>` tags.  
+
+### Task Description
+{{task}}
+
+### Response Format
+description of the task and the feature given in the task
+```
+<response>
+{
+"negativeTask": "insert negative task here",
+"positiveTask": "insert positive task here"
+}
+</response>
+```

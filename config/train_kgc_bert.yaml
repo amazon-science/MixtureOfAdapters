@@ -1,0 +1,70 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+datamodule:
+  _target_: embedding_adapter.kgc_datamodule.KGCDataModule
+  local_data_path: data/kgc
+  batch_size: 64
+  num_workers: 2
+  use_reannotated_data: false
+
+module:
+  _target_: embedding_adapter.kgc_module.KGCModule
+  adapter:
+    _target_: embedding_adapter.linear_moe_adapter.LinearMoEAdapter  
+    context_size: 768
+    input_size: 768
+    output_size: 768
+    shared_adapter_hidden_size: 768
+    noisy_gating: true
+    inference_noise: false
+    gate_hidden_size: 128
+    num_experts: 8
+    expert_hidden_size: 384
+    top_k: 2
+    composition_mode: "sum"
+    context_noise_std: 0.03
+    document_noise_std: 0.08
+  learning_rate: 0.0001
+  weight_decay: 0.01
+  contrastive_loss_coeff: 1
+  consistency_loss_coefficient: 0.1
+  load_loss_coefficient: 0.1
+  initial_tau: 1
+  min_tau: 0.1
+  tau_anneal_rate: 0.1
+  additive_margin: 0
+
+dump_stderr: false
+dump_stdout: false
+task_type: kgc
+logdir: null
+
+trainer:
+  _target_: lightning.pytorch.Trainer
+  accumulate_grad_batches: 1
+  max_epochs: 50
+  check_val_every_n_epoch: 1
+  accelerator: gpu
+  devices: 1
+  callbacks:
+    - _target_: lightning.pytorch.callbacks.ModelCheckpoint
+      dirpath: ${logdir}/checkpoints
+      filename: "triplet-model-epoch-{epoch:04d}"
+      every_n_epochs: 1
+      save_top_k: -1
+      save_last: false
+      auto_insert_metric_name: false
+
+    - _target_: lightning.pytorch.callbacks.EarlyStopping
+      monitor: "contrastive_loss/val"
+      patience: 100
+      mode: min
+
+    - _target_: lightning.pytorch.callbacks.RichProgressBar
+
+  logger:
+    _target_: lightning.pytorch.loggers.TensorBoardLogger
+    save_dir: ${logdir}
+    name: "tensorboard"
+  log_every_n_steps: 1

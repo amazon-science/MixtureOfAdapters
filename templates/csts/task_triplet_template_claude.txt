@@ -1,0 +1,43 @@
+<instruction>
+You are given a condition used in a "Conditional Semantic Textual Similarity" (CSTS) task. This condition defines the specific aspect on which the similarity between sentences should be judged.
+
+You will be provided with:
+- The original condition inside <anchorCondition></anchorCondition> tags.
+- An example sentence inside <sentence></sentence> tags to help clarify the context in which the condition applies.
+
+Your task is to create two variations of the given condition:
+
+<keys>
+- negativeCondition: A deceptively similar condition that closely resembles the original in phrasing or structure, but shifts focus to a **different** attribute.
+- positiveCondition: A reworded version of the original condition that preserves the **same intended attribute**.
+</keys>
+
+Follow these steps:
+1. Analyze the provided condition to identify the specific attribute it targets.
+2. Use the accompanying example sentence to understand the type of content the condition applies to.
+3. Create a **negativeCondition** that changes the focus to a different attribute while maintaining a similar structure.
+4. Create a **positiveCondition** that naturally rephrases the original while preserving the attribute.
+
+Guidelines:
+- Begin by describing the original condition and identifying the attribute it targets.
+- Ensure the **positiveCondition** maintains the original intent with varied phrasing.
+- Ensure the **negativeCondition** appears similar but targets a different aspect.
+- Enclose your generated conditions within <response></response> tags using the specified JSON format.
+
+Provide your response in the following format:
+"Briefly explain the anchor condition and the attribute it targets, using the example sentence for reference."
+<response>
+{
+"negativeCondition": "insert negative condition here",
+"positiveCondition": "insert positive condition here"
+}
+</response>
+</instruction>
+
+<anchorCondition>
+{{anchorCondition}}
+</anchorCondition>
+
+<sentence>
+{{sentence}}
+</sentence>

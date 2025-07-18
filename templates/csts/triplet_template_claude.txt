@@ -1,0 +1,45 @@
+<instruction>
+Your task is to generate a triplet example for "Conditional Semantic Textual Similarity", where the goal is to measure how similar two sentences are, **given a specific semantic aspect**, expressed in natural language. You will be given:
+1. A condition enclosed inside <condition></condition> tags. This specifies the aspect along which the similarity should be judged.
+2. An example sentence enclosed inside <exampleSentence></exampleSentence> tags. This is provided to help you understand the context and the intended meaning of the condition.
+
+Your triplet example will consist of three sentences, where each sentence is a caption describing an image. Make sure these sentences are similar in style to the example sentence provided. Your output should include the following keys:
+
+<keys>
+- anchorSentence: A baseline sentence that is relevant to both the context and the specified condition.
+- negativeSentence: A sentence that differs from the anchorSentence only with respect to the condition. It should be nearly identical to the anchorSentence in all other aspects and remain internally consistent.
+- positiveSentence: A sentence that is different from the anchorSentence in other aspects but is very similar specifically with respect to the condition.
+</keys>
+
+Follow these steps:
+1. Read and understand the provided semantic textual similarity condition carefully.
+2. Identify the specific similarity criterion mentioned in the condition that should be used to create the negativeSentence and positiveSentence.
+3. Consider at least 10 options for generating the positiveSentence and negativeSentence.
+4. Generate a triplet example, adhering to the guidelines:
+- Describe the condition and the similarity criterion in your response.
+- List the different options you considered for the example, and then choose one.
+- Enclose the triplet example within <example></example> tags in the specified JSON format.
+
+Ensure:
+- Accurate identification and application of the similarity criterion.
+- Creative and relevant content generation for the sentences.
+
+Provide your response in the following format:
+"Describe the condition and the similarity criterion given in the condition here."
+"Consider different options regarding your example. List your options here and then choose one of these options."
+<example>
+{
+"anchorSentence": "insert anchor sentence here",
+"negativeSentence": "insert negative sentence here",
+"positiveSentence": "insert positive sentence here"
+}
+</example>
+</instruction>
+
+<condition>
+{{condition}}
+</condition>
+
+<exampleSentence>
+{{exampleSentence}}
+</exampleSentence>

@@ -1,0 +1,39 @@
+Task: Generate a list of document retrieval tasks that focus on identifying similar products based on different features or attributes. Each task should specify the set of documents being considered and clearly define the similarity criterion used for retrieval. Each task must involve identifying other products similar to a given product based on a specific criteria. **Ensure the task is practical and applicable in real-world scenarios.**
+
+Instructions:
+1. <step1>Identify a specific and concrete attribute commonly found in product descriptions within a given category. **Ensure this attribute can serve as a broad similarity criterion for users looking for comparable products.** It should be simple, clearly defined, and easily extractable from descriptions. Some examples attributes are volume, color, weight, size, gender, age group, material, capacity, plug type, brand, manufacturer, country of origin, efficiency, durability, shape, eco-friendliness, recyclability, waterproofing... You can use one of these attributes or generate a new attribute. Be creative in your selection and specify only one attribute. Provide this definition within <criteria> tags.</step1>
+
+2. <step2>Formulate a clear and specific instruction or question that frames a product retrieval task that requires identifying other products that are similar to a given product based on the specified criteria. Enclose this instruction within <task> tags.</step2>
+
+3. <step3>Repeat steps 1 and 2 to generate multiple document retrieval tasks, each with a distinct feature or attribute as the similarity criteria. Enclose each response within <response> tags.</step3>
+
+4. In your response, provide the list of document retrieval tasks in the following format:
+
+<response>
+<criteria>Criteria 1</criteria>
+<task>Document retrieval task instruction for Criteria 1</task>
+</response>
+
+<response>
+<criteria>Criteria 2</criteria>
+<task>Document retrieval task instruction for Criteria 2</task>
+</response>
+
+... (Continue with additional tasks as needed)
+
+A few-shot example is provided below for reference. You can include very similar tasks in your response.
+
+<fewshot_example>
+<response>
+<criteria>Volume</criteria>
+<task>Given a backpack description, find products that have the same volume.</task>
+</response>
+<response>
+<criteria>Material</criteria>
+<task>Given a dining table description, find other products that share a similar primary material.</task>
+</response>
+<response>
+<criteria>Compatibility</criteria>
+<task>Given a phone case description, find other phone cases that are compaitable with the same model.</task>
+</response>
+</fewshot_example>

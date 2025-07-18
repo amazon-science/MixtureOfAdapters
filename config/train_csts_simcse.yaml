@@ -1,0 +1,68 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+datamodule:
+  _target_: embedding_adapter.csts_datamodule.CSTSDataModule
+  local_data_path: data/csts/simcse
+  batch_size: 48
+  num_workers: 2
+  use_reannotated_data: false
+
+module:
+  _target_: embedding_adapter.csts_module.CSTSQuadModule
+  adapter:
+    _target_: embedding_adapter.moa.MixtureOfAdapters  
+    context_size: 1024
+    input_size: 1024
+    output_size: 256
+    num_experts: 384
+    expert_hidden_size: null
+    shared_adapter_hidden_size: null
+    gate_hidden_size: null
+    composition_mode: sum
+    gate_activation: linear
+    dropout: 0.1
+    input_noise_std: 0.025
+    context_noise_std: 0.025
+  # adapter_ckpt_path: logs/20250513-101105_study_57e643/trial_0/checkpoints/triplet-model-epoch-0024.ckpt
+  learning_rate: 0.007
+  weight_decay: 0.01
+  contrastive_loss_coeff: 1
+  mse_loss_coeff: 2
+  info_nce_loss_coeff: 0.1
+  use_head: False
+  finetune_encoder: False
+
+dump_stderr: false
+dump_stdout: false
+task_type: csts
+logdir: null
+
+trainer:
+  _target_: lightning.pytorch.Trainer
+  accumulate_grad_batches: 1
+  max_epochs: 1000
+  check_val_every_n_epoch: 1
+  accelerator: gpu
+  devices: 1
+  callbacks:
+    - _target_: lightning.pytorch.callbacks.ModelCheckpoint
+      dirpath: ${logdir}/checkpoints
+      filename: "triplet-model-epoch-{epoch:04d}"
+      every_n_epochs: 5
+      save_top_k: -1
+      save_last: false
+      auto_insert_metric_name: false
+
+    - _target_: lightning.pytorch.callbacks.EarlyStopping
+      monitor: "spearman_corr/val"
+      patience: 100
+      mode: max
+
+    - _target_: lightning.pytorch.callbacks.RichProgressBar
+
+  logger:
+    _target_: lightning.pytorch.loggers.TensorBoardLogger
+    save_dir: ${logdir}
+    name: "tensorboard"
+  log_every_n_steps: 1

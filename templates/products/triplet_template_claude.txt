@@ -1,0 +1,38 @@
+<instruction>
+Your task is to generate a triplet example for a text attribute extraction task, where the goal is to measure similarity between product descriptions based on a specific criterion. You will be given the task inside <task_description></task_description> tags. The triplet should contain the following keys:
+
+<keys>
+- anchorDocument: A product description of at least 50 words in English, relevant to the given task.
+- negativeDocument: A modified version of the anchorDocument, differing only based on the specified similarity criterion. It should remain identical to the anchorDocument in all other aspects. The document should also be internally consistent.
+- positiveDocument: A different product description of at least 50 words in English, related to the anchorDocument based on the specified similarity criterion. Make sure this document is very similar to the anchorDocument according to the similarity criterion specified in the task.
+</keys>
+
+Follow these steps:
+1. Read and understand the provided text retrieval task description carefully.
+2. Identify the specific similarity criterion or feature mentioned in the task that should be used to create the negativeDocument and positiveDocument.
+3. Consider at least 10 options for generating the triplet example documents.
+4. Generate the triplet example, adhering to the guidelines:
+- Describe the task and the similarity criterion in your response.
+- List the different options you considered for the example, and then choose one.
+- Enclose the triplet example within <example></example> tags in the specified JSON format.
+
+Ensure:
+- Accurate identification and application of the similarity criterion.
+- Maintaining the length requirement of at least 50 words for all documents.
+- Creative and relevant content generation for the documents.
+
+Provide your response in the following format:
+"Describe the task and the similarity criterion given in the task here."
+"Consider different options regarding your example. List your options here and then choose one of these options."
+<example>
+{
+"anchorDocument": "insert anchor document here",
+"negativeDocument": "insert negative document here",
+"positiveDocument": "insert positive document here"
+}
+</example>
+</instruction>
+
+<task_description>
+{{task}}
+</task_description>

@@ -1,0 +1,9 @@
+Method,Architecture,MRR,Hits@1,Hits@3,Hits@10,MRR_err,Hits@1_err,Hits@3_err,Hits@10_err
+KG-S2S,coupled,33.6, 25.7, 37.3, 49.8,0.0,0.0,0.0,0.0
+StAR,coupled,29.6, 20.5, 32.2, 48.2,0.0,0.0,0.0,0.0
+Bi-encoder SimKGC,coupled,33.6, 24.9, 36.2, 51.1,0.5,0.8,0.9,1.2
+CSR,coupled,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tri-encoder SimKGC,decoupled,27.1, 19.3, 29.2, 43.0,0.6,0.7,0.9,1.2
+Hyper-CL,decoupled,31.8, 23.1, 34.4, 48.6,0.6,0.7,0.9,1.2
+MoA (frozen encoder),decoupled,29.2,22.0,31.0,0.0,0.6,0.7,0.9,1.2
+MoA,decoupled,34.2,25.6,36.2,51.8,0.6,0.7,0.9,1.2
